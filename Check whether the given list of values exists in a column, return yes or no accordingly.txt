@@ -1,5 +1,14 @@
-select e1.EMPLOYEE_ID,e1.job_id,column_value ID_Job,
-case when e1.job_id is null then 'NO' else 'YES' end as does_it_exists 
-from sys.odcivarchar2list('SA_REP','ST_MAN','NotValid','FI_ACCOUNT') l1
-left join employees e1
-on e1.job_id = column_value;
+--Check whether the given list of values exists in a column, return yes or no accordingly
+SELECT
+    e1.employee_id,
+    e1.job_id,
+    column_value id_job,
+    CASE
+        WHEN e1.job_id IS NULL THEN
+            'NO'
+        ELSE
+            'YES'
+    END          AS does_it_exists
+FROM
+    sys.odcivarchar2list('SA_REP', 'ST_MAN', 'NotValid', 'FI_ACCOUNT') l1
+    LEFT JOIN employees 
