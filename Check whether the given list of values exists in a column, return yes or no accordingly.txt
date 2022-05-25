@@ -1,0 +1,5 @@
+select e1.EMPLOYEE_ID,e1.job_id,column_value ID_Job,
+case when e1.job_id is null then 'NO' else 'YES' end as does_it_exists 
+from sys.odcivarchar2list('SA_REP','ST_MAN','NotValid','FI_ACCOUNT') l1
+left join employees e1
+on e1.job_id = column_value;
