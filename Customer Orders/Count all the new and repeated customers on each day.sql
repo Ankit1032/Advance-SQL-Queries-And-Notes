@@ -91,4 +91,18 @@ with first_visit as (
     order by co.order_date;
 
 
+--One More Solution
+with temp as
+(select ORDER_ID, CUSTOMER_ID, ORDER_DATE, ORDER_AMOUNT,
+dense_rank() over(partition by customer_id order by order_date) as cust_rank
+from customer_orders
+), temp2 as(
+select ORDER_DATE,
+case when cust_rank = 1 then 1 else 0 end new_cust,
+case when cust_rank <> 1 then 1 else 0 end repeat_cust
+from temp)
+select ORDER_DATE,sum(new_cust) as new_customers_count,sum(repeat_cust) as repeat_customers_count from temp2
+group by ORDER_DATE
+;
+
 
