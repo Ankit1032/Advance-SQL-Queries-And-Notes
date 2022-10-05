@@ -1,4 +1,4 @@
-
+--pivot example 1
 select * from
 (select ORDER_DATE,customer_id, order_amount from customer_orders )
 pivot (sum(order_amount)
@@ -6,3 +6,13 @@ pivot (sum(order_amount)
 )
 order by ORDER_DATE
 ;
+
+--pivot example 2
+select * from
+(select CUSTOMER_ID, ORDER_DATE, ORDER_AMOUNT from customer_orders)
+pivot (sum(ORDER_AMOUNT) 
+    for ORDER_DATE in ('01-01-22','02-01-22','03-01-22')
+)
+order by CUSTOMER_ID
+;
+
