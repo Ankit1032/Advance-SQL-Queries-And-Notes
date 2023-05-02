@@ -1,0 +1,15 @@
+In Oracle SQL, the ROWS BETWEEN clause is used to specify a range of rows over which a window function operates. There are several techniques that you can use with the ROWS BETWEEN clause in Oracle SQL, including:
+
+ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW: This specifies that the window frame includes all rows from the beginning of the partition up to and including the current row.
+
+ROWS BETWEEN n PRECEDING AND CURRENT ROW: This specifies that the window frame includes the current row and the n rows that come before it.
+
+ROWS BETWEEN UNBOUNDED PRECEDING AND n FOLLOWING: This specifies that the window frame includes the current row and the n rows that come after it.
+
+ROWS BETWEEN n PRECEDING AND n FOLLOWING: This specifies that the window frame includes the n rows that come before the current row and the n rows that come after the current row.
+
+ROWS BETWEEN CURRENT ROW AND n FOLLOWING: This specifies that the window frame includes the current row and the n rows that come after it.
+
+ROWS BETWEEN m PRECEDING AND n FOLLOWING: This specifies that the window frame includes the m rows that come before the current row and the n rows that come after the current row.
+
+You can use any of these techniques to define a window frame for a window function in Oracle SQL. The technique you choose will depend on the specific requirements of your query and the type of calculation you want to perform.
