@@ -34,7 +34,7 @@ insert into employee values(122, 'Ibrahim', 'IT', 8000);
 insert into employee values(123, 'Vikram', 'IT', 8000);
 insert into employee values(124, 'Dheeraj', 'IT', 11000);
 
---query
+--query 1
 select * from (
 select EMP_ID, EMP_NAME, DEPT_NAME, SALARY,
 row_number() over(partition by DEPT_NAME order by SALARY desc) as max_sal_dept_rank,
@@ -42,3 +42,16 @@ row_number() over(partition by DEPT_NAME order by SALARY asc) as min_sal_dept_ra
 from employee
 )
 where max_sal_dept_rank = 1 or min_sal_dept_rank = 1;
+
+--query2
+SELECT *
+FROM employee e
+INNER JOIN (
+    SELECT EMP_ID, EMP_NAME, DEPT_NAME, SALARY,
+    MAX(salary) OVER (PARTITION BY dept_name) AS max_salary,
+    MIN(salary) OVER (PARTITION BY dept_name) AS min_salary
+    FROM employee
+) x
+ON e.emp_id = x.emp_id
+AND (e.salary = x.max_salary OR e.salary = x.min_salary)
+ORDER BY x.dept_name, x.salary;
