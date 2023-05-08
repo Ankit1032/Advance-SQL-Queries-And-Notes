@@ -26,17 +26,22 @@ insert into weather values (8, 'London', 5, to_date('2021-01-08','yyyy-mm-dd'));
 select * from weather;
 
 --query1
-select id,temperature,
-case 
-    --first record
-    when temperature < 0 and lead(temperature,1,999) over(order by id) < 0 and lead(temperature,2,999) over(order by id) < 0
-    then 'LOW'
-    --second record
-    when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lead(temperature,1,999) over(order by id) < 0
-    then 'LOW'
-    --third record
-    when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lag(temperature,2,999) over(order by id) < 0
-    then 'LOW'
-    --else 
-    else 'HIGH' end as TEMP
-from weather;
+select * from(
+    select id,temperature,
+    case 
+        --first record
+        when temperature < 0 and lead(temperature,1,999) over(order by id) < 0 and lead(temperature,2,999) over(order by id) < 0
+        then 'Consecutive'
+        --second record
+        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lead(temperature,1,999) over(order by id) < 0
+        then 'Consecutive'
+        --third record
+        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lag(temperature,2,999) over(order by id) < 0
+        then 'Consecutive'
+        --else 
+        else 'Not_Consecutive' end as TEMP
+    from weather
+)
+where TEMP = 'Consecutive'
+;
+
