@@ -30,13 +30,13 @@ select * from(
     select id,temperature,
     case 
         --first record
-        when temperature < 0 and lead(temperature,1,999) over(order by id) < 0 and lead(temperature,2,999) over(order by id) < 0
+        when temperature < 0 and lead(temperature,1,999) over(order by id) < 0 and lead(temperature,2,999) over(order by day) < 0
         then 'Consecutive'
         --second record
-        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lead(temperature,1,999) over(order by id) < 0
+        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lead(temperature,1,999) over(order by day) < 0
         then 'Consecutive'
         --third record
-        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lag(temperature,2,999) over(order by id) < 0
+        when temperature < 0 and lag(temperature,1,999) over(order by id) < 0 and lag(temperature,2,999) over(order by day) < 0
         then 'Consecutive'
         --else 
         else 'Not_Consecutive' end as TEMP
