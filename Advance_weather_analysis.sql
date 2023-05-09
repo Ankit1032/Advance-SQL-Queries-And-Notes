@@ -1,6 +1,5 @@
 --Question a) Finding n(lets say 5) consecutive records where temperature is below zero. And table has a primary key.
 --Question b) Finding n consecutive records where temperature is below zero. And table does not have primary key.
---Question c) Finding n consecutive records with consecutive date value.
 
 --Table Structure:
 create table weather
@@ -77,14 +76,6 @@ with temp1 as (
 select CITY, TEMPERATURE, DAY from temp3
 where cnt=5
 ;
-
-
---query question c)
-
-
-
-
-
 
 
 
