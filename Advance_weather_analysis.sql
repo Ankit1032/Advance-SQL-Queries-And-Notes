@@ -55,7 +55,28 @@ where CNT=5
 
 
 --query question b)
+--Made a view ignoring primary key and unique key columns
+create or replace view vw_weather as
+select city, temperature, day from weather;
 
+select * from vw_weather ;
+
+with temp1 as (
+    select city, temperature, day, 
+    row_number() over(order by day asc) as id
+    from vw_weather
+), temp2 as (
+    select id,city, temperature, day, id - row_number() over(order by id) as diff
+    from temp1
+    where temperature < 0
+), temp3 as (
+    select ID, CITY, TEMPERATURE, DAY, DIFF,
+    count(*) over(partition by diff order by diff) as cnt
+    from temp2
+)
+select CITY, TEMPERATURE, DAY from temp3
+where cnt=5
+;
 
 
 --query question c)
